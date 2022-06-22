@@ -3,6 +3,14 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors'
 
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 import postRoute from './routes/posts.js'
 import userRoutes from './routes/user.js'
 
@@ -13,6 +21,8 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, "public")));
 
 
 
@@ -33,12 +43,18 @@ mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: tr
 app.use('/posts', postRoute);
 app.use('/user', userRoutes);
 
+
 app.get('/', (req, res) => {
     res.send('App is Running');
 })
+
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+})
+
 
 // app.get('/user', (req, res) => {
 //     res.send('Hello World!')
 //     console.log('Hello World!');
 //   })
-  
