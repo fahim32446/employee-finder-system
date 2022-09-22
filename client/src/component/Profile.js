@@ -7,6 +7,9 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Loading from './Loading';
 import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import app from '../firebase';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 
 const Profile = ({ currentId, setCurrentId }) => {
 
@@ -14,12 +17,14 @@ const Profile = ({ currentId, setCurrentId }) => {
     name: '', email: '', phone: '', address: '', dob: '', schoolName: '', schoolCertificate: '', schoolGpa: '', collageName: '', collageCertificate: '', collageGpa: '', Salary: '', honrsName: '', honrsCertificate: '', honrsCGPA: '', workExperience1: '', workJoin1: '', workLeave1: '', workExperience2: '', workJoin2: '', workLeave2: '', skills: [], about: '', file: '', Website: '', Github: '', Facebook: '', linkedin: '', Skype: '', jobtitle: '', Interested: '', ProjectOne: '', ProjectOneGit: '', ProjectTwo: '', ProjectTwoGit: '', ProjectThree: '', ProjectThreeGit: '', Job_type: ''
   });
 
+
+
   const chooseSkills = [
     "JavaScript", "ReactJs", "Css", "NodeJs", "ExpressJs", "Mongoose", "MySql", "Java", "C#", "C", "C+", "Php", "Laravel", "Wordpress", "Python", "Django", "CCNA", "Flutter", "Html", "Photoshop", "Lightroom", "PremierePro", "UI/UX", "Bootstrap", "Android Studio"
   ];
 
 
-  console.log(postData);
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,9 +47,43 @@ const Profile = ({ currentId, setCurrentId }) => {
 
   }, [location])
 
-  const handelSubmit = (e) => {
-
+  const imageHandler = (e) => {
     e.preventDefault();
+    const file = e.target.files[0];
+    const filename = new Date().getTime() + file?.name;
+    const storage = getStorage(app);
+    const storageRef = ref(storage, filename);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+          default:
+        }
+      },
+      (error) => {
+      }, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setPostData({ ...postData, file: downloadURL })
+
+        });
+      }
+    );
+
+
+  }
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+
 
     if (currentId) {
       dispatch(updatePost(currentId, postData));
@@ -67,14 +106,14 @@ const Profile = ({ currentId, setCurrentId }) => {
               <img className="rounded-circle mt-5" width="150px" src=
                 {user ? postData.file :
 
-                //   (
-                //   "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                  //   (
+                  //   "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
 
-                // ) 
-                
-                (
-                  "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                )}
+                  // ) 
+
+                  (
+                    "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                  )}
               />
 
               <div className="font-weight-bold">
@@ -96,14 +135,22 @@ const Profile = ({ currentId, setCurrentId }) => {
 
 
 
-            <div className='mt-5'>
+            {/* <div className='mt-5'>
               <label htmlFor="formFile" className="form-label">Change Profile Picture</label>
               <FileBase className="form-control"
                 type="file"
                 multiple={false}
                 onDone={({ base64 }) => setPostData({ ...postData, file: base64 })}
               />
+            </div> */}
+
+
+
+            <div className="mt-5 mb-3">
+              <label htmlFor="formFileSm" className="form-label">Change Profile Picture</label>
+              <input className="form-control form-control-sm" id="file" type="file" onChange={imageHandler} />
             </div>
+
 
             <div className='mt-3'>
               <h6>Select Your Job Title</h6>

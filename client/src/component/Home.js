@@ -66,14 +66,14 @@ const Home = ({ setCurrentId }) => {
           {isLoading ? <Loading /> : (
             <div className="row">
 
-              {posts.map((post, key) => (
+              {posts.map((post, index) => (
 
-                <div className="col-lg-4 col-md-6">
+                <div key={index} className="col-lg-4 col-md-6">
 
                   <div className="card card_hover user-card">
 
-                    <div class="ribbon-wrapper">
-                      <div class="ribbon">{post.Job_type}</div>
+                    <div className="ribbon-wrapper">
+                      <div className="ribbon">{post.Job_type}</div>
                     </div>
 
                     <div className="card-block rounded ">
@@ -87,8 +87,8 @@ const Home = ({ setCurrentId }) => {
                         <hr />
                       </div>
                       <span className='my_p'>Expert in</span>
-                      {post.skills.slice(0, 3).map((skill) => (
-                        <p style={{ cursor: 'pointer' }} onClick={() => { searchTag(skill) }} className="my_border small rounded m-1 p-1 d-block">{skill}</p>
+                      {post.skills.slice(0, 3).map((skill, index) => (
+                        <p key={index} style={{ cursor: 'pointer' }} onClick={() => { searchTag(skill) }} className="my_border small rounded m-1 p-1 d-block">{skill}</p>
                       ))}
 
                     </div>
