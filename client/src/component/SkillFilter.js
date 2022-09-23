@@ -55,8 +55,8 @@ const SkillFilter = ({ match }) => {
               {posts.map((post, key) => (
                 <div className="col-lg-4 col-md-6">
                   <div className="card card_hover user-card">
-                    <div class="ribbon-wrapper">
-                      <div class="ribbon">{post.Job_type}</div>
+                    <div className="ribbon-wrapper">
+                      <div className="ribbon">{post.Job_type}</div>
                     </div>
                     <div className="card-block rounded ">
                       <div onClick={() => { navigate(`/posts/${post?._id}`) }} className="after_hr">

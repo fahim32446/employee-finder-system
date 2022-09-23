@@ -5,6 +5,7 @@ import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { deletePost, getPosts, getPostsSearch, getPostsByTags } from '../actions/posts'
 import Paginate from './Paginate';
 import Loading from './Loading';
+import Test2 from './Test2';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -63,7 +64,7 @@ const Home = ({ setCurrentId }) => {
     <div className="container">
       <div className="row py-3 mt-4 ">
         <div className="col-lg-8 col-md-8 col-sm-12">
-          {isLoading ? <Loading /> : (
+          {isLoading ? <Test2 /> : (
             <div className="row">
 
               {posts.map((post, index) => (
@@ -83,7 +84,7 @@ const Home = ({ setCurrentId }) => {
                         </div>
                         <h6 className="f-w-600">{post.name}</h6>
                         <p className="text-muted">{post.jobtitle}</p>
-                        <p className="text-muted">{`Demand: ${post.Salary ? post.Salary : "0.00"} ৳`}</p>
+                        <p className="text-muted">{`Demand: ${post.Salary ? Number(post.Salary).toLocaleString('en-US') : "0.00"} ৳`}</p>
                         <hr />
                       </div>
                       <span className='my_p'>Expert in</span>

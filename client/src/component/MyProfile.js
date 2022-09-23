@@ -13,7 +13,7 @@ const MyProfile = ({ setCurrentId }) => {
 
   const { posts, isLoading } = useSelector((state) => state.posts);
 
-  console.log("Profile Page" + posts);
+
 
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -49,8 +49,8 @@ const MyProfile = ({ setCurrentId }) => {
 
                   <div className="card card_hover user-card">
 
-                    <div class="ribbon-wrapper">
-                      <div class="ribbon">{post.Job_type}</div>
+                    <div className="ribbon-wrapper">
+                      <div className="ribbon">{post.Job_type}</div>
                     </div>
 
                     <div className="card-block rounded">

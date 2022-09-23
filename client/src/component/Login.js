@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Img from '../asset/img.jpg'
 import { GoogleLogin } from 'react-google-login'
 import '../App.css';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom';
 import { signin } from '../actions/auth'
 
@@ -10,6 +10,11 @@ import { signin } from '../actions/auth'
 const initialState = { email: '', password: '' };
 
 const Login = () => {
+
+    const {authData} = useSelector((state) => state.auth);
+
+   
+
 
     const [formData, setFormData] = useState(initialState);
 
@@ -66,13 +71,17 @@ const Login = () => {
 
 
                                     <form onSubmit={handelSubmit}>
+
+                                        <p className='text-danger'>{authData?.response?.data?.message}</p>
+                                        
                                         <div className="form-group first">
+
                                             <label htmlFor="username">Email Address</label>
-                                            <input type="email" name='email' onChange={handleChange} className="form-control" id="username" />
+                                            <input type="email" name='email' onChange={handleChange} className="form-control" id="username" required />
                                         </div>
                                         <div className="form-group last mb-4">
                                             <label htmlFor="password">Password</label>
-                                            <input type="password" name='password' onChange={handleChange} className="form-control" id="password" />
+                                            <input type="password" name='password' onChange={handleChange} className="form-control" id="password" required/>
                                         </div>
 
                                         <button className='loginbtn btn btn-primary' type='submit'>Log In</button>
@@ -93,7 +102,7 @@ const Login = () => {
                                     </form>
                                     <div className="mt-3 text-center w-100">
                                         <p className="text-muted font-weight-bold">New to Employee Finder?
-                                        <Link className="text-primary mx-2" to="/signup">Signup with Email</Link></p>
+                                            <Link className="text-primary mx-2" to="/signup">Signup with Email</Link></p>
                                     </div>
                                 </div>
                             </div>

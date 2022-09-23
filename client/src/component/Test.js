@@ -18,7 +18,7 @@ const Test = () => {
 
 
   const handleAdd = (id) => {
-    setFields([...fields, { id: id + 1, firstName: '', lastName: '' }])
+    setFields([...fields, { id: id + 2, firstName: '', lastName: '' }])
   }
 
   const handleSubtract = (i) => {
@@ -27,7 +27,7 @@ const Test = () => {
     setFields([...values])
   }
 
-console.log(fields);
+  console.log(fields);
 
   return (
     <div className='container p-5'>
@@ -35,11 +35,11 @@ console.log(fields);
         {fields.map((field, i) => (
 
           <div key={i} className="mb-3">
-            <input type="text" name="firstName" className="form-control" placeholder='firstName' value={field.firstName}  onChange={e => handleChangeInput(i, e)}/>
+            <input type="text" name="firstName" className="form-control" placeholder='firstName' value={field.firstName} onChange={e => handleChangeInput(i, e)} />
 
-            <input type="text"  name="lastName" className="form-control" placeholder='lastName' onChange={e => handleChangeInput(i, e)} />
+            <input type="text" name="lastName" className="form-control" placeholder='lastName' onChange={e => handleChangeInput(i, e)} />
 
-            <button  value={field.lastName} onClick={() => handleAdd(i)} className="btn btn-primary">Add</button>
+            <button value={field.lastName} onClick={() => handleAdd(i)} className="btn btn-primary">Add</button>
 
             <button disabled={field.id === 1} onClick={() => handleSubtract(i)} className="btn btn-primary">Remove</button>
 
@@ -48,6 +48,89 @@ console.log(fields);
         <button type="submit" className="btn btn-primary">Submit</button>
 
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div className="row mt-3">
+        <h5>Educational Information</h5>
+
+        <div className="col-md-4">
+          <input name="schoolName" type="text" className="form-control" placeholder='Institute Name' />
+        </div>
+
+        <div className="col-md-4">
+          <input name="schoolCertificate" type="text" className="form-control" placeholder='Certificates' />
+        </div>
+
+        <div className="col-md-4">
+          <input name="schoolGpa" type="text" className="form-control" placeholder='GPA' />
+        </div>
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <table className="table">
+        <thead>
+
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td>Mark</td>
+            <td>Otto</td>
+            
+          </tr>
+
+          <tr>
+            <td>Jacob</td>
+            <td>Thornton</td>
+          </tr>
+      
+          
+        </tbody>
+      </table>
+
+
+
 
     </div>
   )
